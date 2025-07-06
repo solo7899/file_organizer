@@ -58,10 +58,6 @@ python file_organizer.py C:\Users\YourName\Downloads --dry-run
 
 All actions (except in dry run mode) are logged to the specified log file.
 
-## License
-
-MIT License
-
 ## Author
 
-Your Name
+SOLO7899
