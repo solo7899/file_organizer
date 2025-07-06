@@ -1,6 +1,18 @@
 import argparse
 from pathlib import Path
 
+EXTENSION_CATEGORIES = {
+    "Images": [".jpg", ".jpeg", ".png", ".gif", ".bmp", ".tiff"],
+    "Videos": [".mp4", ".avi", ".mov", ".mkv", ".flv", ".wmv"],
+    "Documents": [".pdf", ".docx", ".txt", ".xlsx", ".pptx", ".odt"],
+    "Audio": [".mp3", ".wav", ".aac", ".flac", ".ogg", ".m4a"],
+    "Archives": [".zip", ".rar", ".tar", ".gz", ".7z"],
+    "Scripts": [".py", ".js", ".sh", ".bat", ".pl", ".rb"],
+}
+
+def scan_directory(directory):
+    directory = Path(directory)
+    return [f for f in directory.rglob("*") if f.is_file()]
 
 def parse_arguments():
     parser = argparse.ArgumentParser(description="Organize files into directories based on their extensions.")
@@ -13,13 +25,16 @@ def parse_arguments():
 if __name__ == "__main__":
     args = parse_arguments()
         
-    if Path(args.directory).exists():
-        pass
+    if not Path(args.directory).exists():
+        print("Directory does not exists.")
+        exit(1)
+    print(f"Organizing files in directory: {args.directory}")
     if args.verbose:
-        print(f"Organizing files in directory: {args.directory}")
+        print("Verbose mode enabled. Detailed output will be shown.")
     if args.dry_run:
         print("Dry run mode enabled. No changes will be made.")
     else:
         print("Files will be organized into directories based on their extensions.")
-    # Here you would add the logic to organize files based on their extensions.
 
+    files = scan_directory(args.directory)
+    print(f"Found {len(files)} files to organize.")
