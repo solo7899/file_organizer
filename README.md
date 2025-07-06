@@ -28,7 +28,7 @@ Files are sorted into the following categories based on their extensions:
 1. **Clone the repository:**
 
    ```sh
-   git clone <your-repo-url>
+   git clone https://github.com/solo7899/file_organizer.git
    cd file_organizer
    ```
 
@@ -86,10 +86,6 @@ The following files and folders are ignored by git:
 
 - `.venv/` (your virtual environment)
 - `*.log` (all log files)
-
-## License
-
-MIT License
 
 ## Author
 
