@@ -33,7 +33,9 @@ def parse_arguments():
     return parser.parse_args()
 
 
-def logging_setup(logname):
+def logging_setup(logname, dry_run):
+    if dry_run:
+        return
     logging.basicConfig(
         filename=Path.cwd()/logname,
         level=logging.INFO,
@@ -90,8 +92,9 @@ def organize_files(files:list[Path], dry_run=False, verbose=False):
 if __name__ == "__main__":
     args = parse_arguments()
 
+    
     global logger  
-    logger = logging_setup(args.logname)
+    logger = logging_setup(args.logname, args.dry_run)
         
     if not Path(args.directory).exists():
         print("Directory does not exists.")
