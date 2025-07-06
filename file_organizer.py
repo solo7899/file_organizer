@@ -1,4 +1,6 @@
 import argparse
+import logging
+
 from pathlib import Path
 
 EXTENSION_CATEGORIES = {
@@ -21,8 +23,30 @@ def parse_arguments():
     parser.add_argument("--dry-run", "-d", action="store_true", help="Perform a dry run without making changes.")  
     return parser.parse_args()
 
+def logging_setup():
+    logging.basicConfig(
+        filename="file_organizer.log",
+        level=logging.INFO,
+        format='%(asctime)s - %(levelname)s - %(message)s'
+    )
+    logger = logging.getLogger(__name__)
+    return logger
+
+def log(logger, message, level=logging.INFO, verbose=False):
+    if level == logging.INFO:
+        logger.info(message)
+    elif level == logging.ERROR:
+        logger.error(message)
+    elif level == logging.DEBUG:
+        logger.debug(message)
+    else:
+        logger.warning(message)
+    
+    if verbose:
+        print(message)  
 
 if __name__ == "__main__":
+    logger = logging_setup() 
     args = parse_arguments()
         
     if not Path(args.directory).exists():
@@ -37,4 +61,6 @@ if __name__ == "__main__":
         print("Files will be organized into directories based on their extensions.")
 
     files = scan_directory(args.directory)
-    print(f"Found {len(files)} files to organize.")
+    log(logger, f"Found {len(files)} files in directory: {args.directory}", verbose=args.verbose)
+
+    
